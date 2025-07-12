@@ -1,0 +1,20 @@
+[
+  {
+    "id": "1",
+    "name": "Alice Beispiel",
+    "position": "Außenangriff",
+    "image": "https://via.placeholder.com/400x300?text=Alice"
+  },
+  {
+    "id": "2",
+    "name": "Betty Beispiel",
+    "position": "Zuspiel",
+    "image": "https://via.placeholder.com/400x300?text=Betty"
+  },
+  {
+    "id": "3",
+    "name": "Carla Beispiel",
+    "position": "Mittelblock",
+    "image": "https://via.placeholder.com/400x300?text=Carla"
+  }
+]
