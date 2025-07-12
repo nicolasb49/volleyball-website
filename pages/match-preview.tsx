@@ -36,17 +36,32 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
   const tablePath = path.join(base, 'data', 'table.json');
   const nextPath = path.join(base, 'data', 'nextMatch.json');
 
-  const table = JSON.parse(await fs.readFile(tablePath, 'utf8')) as TableRow[];
+  const table = JSON.parse(
+    await fs.readFile(tablePath, 'utf8')
+  ) as TableRow[];
   const nextMatch = JSON.parse(
     await fs.readFile(nextPath, 'utf8')
   ) as NextMatch;
 
-  const res = await fetch('http://localhost:3000/api/previewText', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ nextMatch, table }),
-  });
-  const { text: introText } = (await res.json()) as { text: string };
+  // Intro-Text initial leer anlegen
+  let introText = '';
+
+  // Versuche, den automatisch generierten Text von der API zu holen
+  try {
+    const res = await fetch('http://localhost:3000/api/previewText', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ nextMatch, table }),
+    });
+    if (res.ok) {
+      const body = (await res.json()) as { text?: string };
+      introText = body.text ?? '';
+    } else {
+      console.warn('[getStaticProps] previewText API returned', res.status);
+    }
+  } catch (err) {
+    console.warn('[getStaticProps] failed to fetch previewText:', err);
+  }
 
   return {
     props: {
@@ -62,7 +77,9 @@ export default function MatchPreview({
   nextMatch,
   introText,
 }: Props) {
-  const [tab, setTab] = useState<'tabelle' | 'spielplan' | 'statistik'>('tabelle');
+  const [tab, setTab] = useState<'tabelle' | 'spielplan' | 'statistik'>(
+    'tabelle'
+  );
 
   const teams = [nextMatch.homeTeam, nextMatch.awayTeam];
 
@@ -71,24 +88,34 @@ export default function MatchPreview({
       <div className="max-w-5xl mx-auto p-4 space-y-6">
         {/* Team Images */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {teams.map((name) => (
-            <div key={name} className="relative overflow-hidden group">
-              <img
-                src={`/images/${name.replace(/\s+/g, '-')}.jpg`}
-                alt={name}
-                className="w-full h-64 object-cover transform group-hover:scale-105 transition"
-              />
-              <div className="absolute bottom-0 inset-x-0 bg-black/60 text-white text-center py-2 text-lg font-semibold">
-                {name}
+          {teams.map((name, idx) => {
+            const safeName = typeof name === 'string' ? name : '';
+            const fileName = safeName.trim().replace(/\s+/g, '-');
+            const src = fileName
+              ? `/images/${fileName}.jpg`
+              : '/images/placeholder.jpg';
+
+            return (
+              <div key={idx} className="relative overflow-hidden group">
+                <img
+                  src={src}
+                  alt={safeName}
+                  className="w-full h-64 object-cover transform group-hover:scale-105 transition"
+                />
+                <div className="absolute bottom-0 inset-x-0 bg-black/60 text-white text-center py-2 text-lg font-semibold">
+                  {safeName || 'Unbekannt'}
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
+
 
         {/* Info line */}
         <div className="bg-white shadow flex flex-col sm:flex-row sm:justify-between text-center p-4">
           <div>
-            <span className="font-semibold">{nextMatch.date}</span> | {nextMatch.time}
+            <span className="font-semibold">{nextMatch.date}</span> |{' '}
+            {nextMatch.time}
           </div>
           <div className="font-semibold">
             {nextMatch.homeTeam} vs. {nextMatch.awayTeam}
@@ -106,7 +133,9 @@ export default function MatchPreview({
           <div className="border-b flex space-x-4">
             <button
               className={`px-4 py-2 font-medium ${
-                tab === 'tabelle' ? 'border-b-2 border-red-600' : 'hover:bg-gray-200'
+                tab === 'tabelle'
+                  ? 'border-b-2 border-red-600'
+                  : 'hover:bg-gray-200'
               }`}
               onClick={() => setTab('tabelle')}
             >
@@ -114,7 +143,9 @@ export default function MatchPreview({
             </button>
             <button
               className={`px-4 py-2 font-medium ${
-                tab === 'spielplan' ? 'border-b-2 border-red-600' : 'hover:bg-gray-200'
+                tab === 'spielplan'
+                  ? 'border-b-2 border-red-600'
+                  : 'hover:bg-gray-200'
               }`}
               onClick={() => setTab('spielplan')}
             >
@@ -122,7 +153,9 @@ export default function MatchPreview({
             </button>
             <button
               className={`px-4 py-2 font-medium ${
-                tab === 'statistik' ? 'border-b-2 border-red-600' : 'hover:bg-gray-200'
+                tab === 'statistik'
+                  ? 'border-b-2 border-red-600'
+                  : 'hover:bg-gray-200'
               }`}
               onClick={() => setTab('statistik')}
             >
@@ -168,8 +201,12 @@ export default function MatchPreview({
                 </p>
                 <p>{nextMatch.location}</p>
                 <p>{nextMatch.lastMeeting}</p>
-                <p>Form {nextMatch.homeTeam}: {nextMatch.form.home}</p>
-                <p>Form {nextMatch.awayTeam}: {nextMatch.form.away}</p>
+                <p>
+                  Form {nextMatch.homeTeam}: {nextMatch.form.home}
+                </p>
+                <p>
+                  Form {nextMatch.awayTeam}: {nextMatch.form.away}
+                </p>
               </div>
             )}
 
@@ -180,4 +217,3 @@ export default function MatchPreview({
     </main>
   );
 }
-
