@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "scrape:table": "node scripts/scrapeTable.js"
+    "scrape:table": "node scripts/scrapeTable.js",
+    "scrape:next": "node scripts/scrapeNextOpponent.js"
   },
   "keywords": [],
   "author": "",
