@@ -21,7 +21,7 @@ export default function MatchPreview() {
     };
   
     return (
-      <main className="bg-gray-100 text-gray-900 min-h-screen">
+      <main className="bg-gray-100 text-gray-900 min-h-screen pt-16">
         {/* Team-Bilder mit Namensleisten */}
         <div className="grid grid-cols-1 sm:grid-cols-2">
           {[match.homeTeam, match.awayTeam].map((team) => (
