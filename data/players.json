@@ -3,18 +3,30 @@
     "id": "1",
     "name": "Alice Beispiel",
     "position": "Außenangriff",
-    "image": "https://via.placeholder.com/400x300?text=Alice"
+    "image": "https://via.placeholder.com/400x300?text=Alice",
+    "age": 23,
+    "height": "1,80 m",
+    "nationality": "Deutschland",
+    "quote": "Immer weiter!"
   },
   {
     "id": "2",
     "name": "Betty Beispiel",
     "position": "Zuspiel",
-    "image": "https://via.placeholder.com/400x300?text=Betty"
+    "image": "https://via.placeholder.com/400x300?text=Betty",
+    "age": 26,
+    "height": "1,75 m",
+    "nationality": "Österreich",
+    "quote": "Teamgeist siegt."
   },
   {
     "id": "3",
     "name": "Carla Beispiel",
     "position": "Mittelblock",
-    "image": "https://via.placeholder.com/400x300?text=Carla"
+    "image": "https://via.placeholder.com/400x300?text=Carla",
+    "age": 21,
+    "height": "1,85 m",
+    "nationality": "Schweiz",
+    "quote": "Block it like it's hot!"
   }
 ]
