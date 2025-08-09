@@ -5,7 +5,7 @@ export default function Home() {
 
   return (
     <div className="relative h-screen w-screen overflow-hidden flex items-center justify-center">
-      {/* 🎥 Hintergrundvideo */}
+      {/* 🎥 Platzhaltervideo */}
       <video
         autoPlay
         loop
@@ -13,21 +13,42 @@ export default function Home() {
         playsInline
         className="absolute top-0 left-0 w-full h-full object-cover z-0"
       >
-        <source src="/video/intro.mp4" type="video/mp4" />
+        <source src="/video/volleyball-background.mp4" type="video/mp4" />
         Dein Browser unterstützt kein Video im Hintergrund.
       </video>
 
-      {/* 🌑 Overlay */}
-      <div className="absolute top-0 left-0 w-full h-full bg-black/60 z-10" />
+      {/* Fallback für fehlendes Video */}
+      <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-orange-500 via-red-500 to-pink-600 z-0" />
 
-      {/* 🟢 Button */}
+      {/* 🌑 Dunkles Overlay für bessere Lesbarkeit */}
+      <div className="absolute top-0 left-0 w-full h-full bg-black/50 z-10" />
+
+      {/* Logo/Titel */}
+      <div className="absolute top-8 left-1/2 transform -translate-x-1/2 z-20 text-center">
+        <h1 className="text-white text-4xl md:text-6xl font-bold mb-2 tracking-wider drop-shadow-lg">
+          SV KARLSRUHE
+        </h1>
+        <p className="text-white/90 text-lg md:text-xl font-light tracking-wide drop-shadow-md">
+          BEIERTHEIM VOLLEYBALL
+        </p>
+      </div>
+
+      {/* 🟢 Zentraler "Let's go" Button */}
       <button
         onClick={() => router.push("/match-preview")}
-        className="z-20 relative text-white text-2xl sm:text-3xl px-10 py-4 font-bold tracking-wide rounded-full border-2 border-white backdrop-blur-md bg-white/10 hover:bg-white/20 transition-all duration-300 hover:scale-105 shadow-xl"
+        className="z-20 relative group text-white text-2xl sm:text-3xl lg:text-4xl px-12 py-6 font-bold tracking-wide rounded-full border-3 border-white backdrop-blur-md bg-white/10 hover:bg-white/20 transition-all duration-500 hover:scale-110 shadow-2xl transform hover:rotate-1"
       >
-        Let’s go
-        <span className="absolute inset-0 rounded-full ring-2 ring-white/40 animate-pulse pointer-events-none" />
+        <span className="relative z-10">Let's go</span>
+        <div className="absolute inset-0 rounded-full bg-gradient-to-r from-orange-500/20 to-red-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        <span className="absolute inset-0 rounded-full ring-4 ring-white/30 animate-pulse pointer-events-none" />
       </button>
+
+      {/* Scroll-Indikator */}
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 text-white/70 animate-bounce">
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+        </svg>
+      </div>
     </div>
   );
 }
