@@ -24,7 +24,7 @@ export default function Home() {
       <div className="absolute top-0 left-0 w-full h-full bg-black/50 z-10" />
 
       {/* Logo/Titel */}
-      <div className="absolute top-8 left-1/2 transform -translate-x-1/2 z-20 text-center">
+      <div className="relative z-20 text-center mt-8">
         <h1 className="text-white text-4xl md:text-6xl font-bold mb-2 tracking-wider drop-shadow-lg">
           SV KARLSRUHE
         </h1>
@@ -34,20 +34,35 @@ export default function Home() {
       </div>
 
       {/* 🟢 Zentraler "Let's go" Button */}
-      <button
-        onClick={() => router.push("/match-preview")}
-        className="z-20 relative group text-white text-2xl sm:text-3xl lg:text-4xl px-12 py-6 font-bold tracking-wide rounded-full border-3 border-white backdrop-blur-md bg-white/10 hover:bg-white/20 transition-all duration-500 hover:scale-110 shadow-2xl transform hover:rotate-1"
-      >
-        <span className="relative z-10">Let's go</span>
-        <div className="absolute inset-0 rounded-full bg-gradient-to-r from-orange-500/20 to-red-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-        <span className="absolute inset-0 rounded-full ring-4 ring-white/30 animate-pulse pointer-events-none" />
-      </button>
+      <div className="relative z-20 mb-12 flex flex-col items-center gap-6">
+        <button
+          type="button"
+          aria-label="Zur Spieltagsvorschau"
+          onClick={() => router.push("/match-preview")}
+          className="z-20 relative group text-white text-2xl sm:text-3xl lg:text-4xl px-12 py-6 font-bold tracking-wide rounded-full border-4 border-white backdrop-blur-md bg-white/10 hover:bg-white/20 transition-all duration-500 hover:scale-110 shadow-2xl transform hover:rotate-1"
+        >
+          <span className="relative z-10">Let's go</span>
+          <span className="pointer-events-none absolute inset-0 rounded-full bg-gradient-to-r from-orange-500/20 to-red-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+          <span className="pointer-events-none absolute inset-0 rounded-full ring-4 ring-white/30 animate-pulse" />
+        </button>
 
-      {/* Scroll-Indikator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 text-white/70 animate-bounce">
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-        </svg>
+        <div className="flex flex-col items-center text-white/80">
+          <span className="text-sm tracking-wide mb-2">Scroll</span>
+          <svg
+            className="w-6 h-6 animate-bounce"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M19 14l-7 7m0 0l-7-7m7 7V3"
+            />
+          </svg>
+        </div>
       </div>
     </div>
   );
